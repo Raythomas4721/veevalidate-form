@@ -113,7 +113,7 @@
                     type="number"
                     min="0"
                     class="form-control text-end"
-                    v-model="cart.qty"
+                    v-model.number="cart.qty"
                     @change="updateCartItem(cart.id,cart.qty)"
                   />
                 </div>
@@ -270,71 +270,7 @@
         </div>
       </div>
       <!-- modal -->
-      <div
-        class="modal fade"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-        ref="productModal"
-      >
-        <div class="modal-dialog modal-xl" role="document">
-          <div class="modal-content border-0">
-            <div class="modal-header bg-dark text-white">
-              <h5 class="modal-title" id="exampleModalLabel">
-                <span>{{ tempProduct.title }}</span>
-              </h5>
-              <button
-                type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div
-                    :style="{
-                        height: '100%',
-                        backgroundImage: 'url(' + tempProduct.imageUrl + ')',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                      }"
-                  ></div>
-                </div>
-                <div class="col-sm-6">
-                  <span class="badge bg-primary rounded-pill"
-                    >{{ tempProduct.category }}</span
-                  >
-                  <p>商品描述：{{ tempProduct.description}}</p>
-                  <p>商品內容：{{ tempProduct.content }}</p>
-                  <del class="h6">原價 {{tempProduct.origin_price }} 元</del>
-                  <div class="h5">現在只要 {{tempProduct.price }} 元</div>
-                  <div>
-                    <div class="input-group">
-                      <input
-                        type="number"
-                        class="form-control"
-                        min="1"
-                        v-model="setQty"
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        @click="addToCart(tempProduct.id,setQty)"
-                      >
-                        加入購物車
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <!-- col-sm-6 end -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <product-modal :temp-product="tempProduct" :set-qty="setQty"  :add-to-cart="addToCart"></product-modal>
     </div>
 
     <script type="module">
@@ -353,6 +289,7 @@
         generateMessage: VeeValidateI18n.localize("zh_TW"),
         validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
       });
+      import productModalCom from "./productModal.js";
       let productModal = null;
       const url = "https://vue3-course-api.hexschool.io";
       const path = "han113";
@@ -527,6 +464,7 @@
           //console.log(VueLoading);
         },
       });
+      app.component("productModal", productModalCom);
       app.component("VForm", VeeValidate.Form);
       app.component("VField", VeeValidate.Field);
       app.component("ErrorMessage", VeeValidate.ErrorMessage);
