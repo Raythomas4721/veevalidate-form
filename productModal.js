@@ -64,5 +64,24 @@ export default {
       </div>
     </div>
   </div>`,
-  props: ["tempProduct", "setQty", "addToCart"]
+  data() {
+    return {
+      productModal: '',
+    }
+  },
+  props: ["tempProduct", "setQty", "addToCart"],
+  mounted() {
+    this.productModal = new bootstrap.Modal(this.$refs.productModal, {
+      keyboard: false,
+      backdrop: "static",
+    });
+  },
+  methods:{
+    openModalItem() {
+      this.productModal.show();
+    },
+    hideModalItem() {
+      this.productModal.hide();
+    },
+  }
 };

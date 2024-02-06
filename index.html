@@ -270,7 +270,7 @@
         </div>
       </div>
       <!-- modal -->
-      <product-modal :temp-product="tempProduct" :set-qty="setQty"  :add-to-cart="addToCart"></product-modal>
+      <product-modal ref="productModal" :temp-product="tempProduct" :set-qty="setQty"  :add-to-cart="addToCart"></product-modal>
     </div>
 
     <script type="module">
@@ -290,7 +290,6 @@
         validateOnInput: true, // 調整為：輸入文字時，就立即進行驗證
       });
       import productModalCom from "./productModal.js";
-      let productModal = null;
       const url = "https://vue3-course-api.hexschool.io";
       const path = "han113";
       const app = Vue.createApp({
@@ -321,7 +320,7 @@
             return phoneNumber.test(value) ? true : "需要正確的電話號碼";
           },
           openModal(id) {
-            productModal.show();
+            this.$refs.productModal.openModalItem();
             this.getSingleProduct(id);
           },
           getProduct() {
@@ -376,7 +375,7 @@
                 //console.log(res.data);
                 this.setQty = 1;
                 this.getCart();
-                productModal.hide();
+                this.$refs.productModal.hideModalItem();
                 this.isLoading = false;
               })
               .catch((err) => {
@@ -455,10 +454,6 @@
           },
         },
         mounted() {
-          productModal = new bootstrap.Modal(this.$refs.productModal, {
-            keyboard: false,
-            backdrop: "static",
-          });
           this.getProduct();
           this.getCart();
           //console.log(VueLoading);
