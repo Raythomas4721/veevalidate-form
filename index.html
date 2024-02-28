@@ -264,13 +264,13 @@
               ></textarea>
             </div>
             <div class="text-end">
-              <button type="submit" class="btn btn-danger">送出訂單</button>
+              <button type="submit" class="btn btn-danger" >送出訂單</button>
             </div>
           </v-form>
         </div>
       </div>
       <!-- modal -->
-      <product-modal ref="productModal" :temp-product="tempProduct" :set-qty="setQty"  :add-to-cart="addToCart"></product-modal>
+      <product-modal ref="productModal" :temp-product="tempProduct" :set-qty="setQty"  :add-to-cart="addToCart" @new-qty="setQty"></product-modal>
     </div>
 
     <script type="module">
@@ -452,6 +452,10 @@
                 //console.log(err);
               });
           },
+          getQty(Qty) {
+            console.log('setQty,', Qty);
+            this.setQty = setQty;
+          }
         },
         mounted() {
           this.getProduct();

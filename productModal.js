@@ -46,12 +46,12 @@ export default {
                     type="number"
                     class="form-control"
                     min="1"
-                    v-model.number="setQty"
+                v-model.number="newQty"
                   />
                   <button
                     type="button"
                     class="btn btn-primary"
-                    @click="addToCart(tempProduct.id,setQty)"
+                    @click="addToCart(tempProduct.id,newQty)"
                   >
                     加入購物車
                   </button>
@@ -67,6 +67,7 @@ export default {
   data() {
     return {
       productModal: '',
+      newQty: 1
     }
   },
   props: ["tempProduct", "setQty", "addToCart"],
@@ -79,9 +80,13 @@ export default {
   methods:{
     openModalItem() {
       this.productModal.show();
+      this.newQty = 1
     },
     hideModalItem() {
       this.productModal.hide();
     },
+    updateQty() {
+        this.$emit('newQty', this.newQty);
+    }
   }
 };
